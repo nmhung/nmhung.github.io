@@ -2,10 +2,33 @@
 <br/>
 <br/>
 <script>
+	function getMobileOperatingSystem() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Windows Phone must come first because its UA also contains "Android"
+    if (/windows phone/i.test(userAgent)) {
+        return "Windows Phone";
+    }
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
+}
 function checkDeepLink() {
 window.location.replace("servishero-consumer://home/"); setTimeout(function () {
-
-window.location.replace("itms://itunes.apple.com/my/app/apple-store/id992334828?mt=8"); }, 2000);
+if (getMobileOperatingSystem() == "Android") {
+window.location.replace("intent:#Intent;scheme=servishero-consumer://home;package=com.servishero.consumer;end"); 
+} else {
+window.location.replace("itms://itunes.apple.com/my/app/apple-store/id992334828?mt=8"); 
+}
+}, 2000);
 }
 </script>
 <button type="button" onclick="checkDeepLink()">Open on iOS</button>
