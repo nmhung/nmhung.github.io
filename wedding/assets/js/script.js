@@ -1126,6 +1126,10 @@ wpo-service-active SLIDER
     ==========================================================================*/
     $(window).on('load', function () {
 
+        // set default color
+        $('body').addClass('color9')
+        localStorage.setItem('switerColor', 'color9')
+
         preloader();
 
         sortingGallery();
